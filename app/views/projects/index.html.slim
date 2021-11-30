@@ -1,0 +1,18 @@
+h1(class="text text-center") Задачи
+
+- @projects.each do |project|
+  div(class="row row-cols-1 row-cols-md-2 g-4")
+    div(class="col")
+      div(class="card mb-3" style="max-width: 40rem;")
+        div(class="card-body")
+          h5(class="card-title")
+            = project.title
+          p(class="card-text")
+            -project.to_dos.each do |todo|
+              - if todo.is_completed?
+                .text-decoration-line-through
+                  = todo.text
+              -else
+                = todo.text
+                br
+            p= link_to "Показать", project_path(project)

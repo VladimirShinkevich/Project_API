@@ -1,0 +1,19 @@
+h1 Новая Задача
+
+=render 'shared/errors', resource: @project
+
+= form_with model: @project, local: true do |f|
+  p
+    = f.label :title, "Задача"
+    = f.text_field :title
+
+  p
+    = f.fields_for :to_dos do |todo|
+      = render 'to_dos/to_dos_fields', f: todo
+    .links
+      = link_to_add_association 'Добавить пункт', f, :to_dos, partial: 'to_dos/to_dos_fields'
+
+
+  p= f.submit 'Создать'
+
+p= link_to 'Назад к списку задач', projects_path

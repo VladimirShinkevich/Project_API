@@ -1,0 +1,5 @@
+$('.project-errors').html("<%= render 'shared/errors', resource: @project %>");
+
+<% if !@project.errors.present? %>
+  $('.project').html('<%= j render @project %>');
+<% end %>

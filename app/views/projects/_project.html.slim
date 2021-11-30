@@ -1,0 +1,37 @@
+h5
+  =project.title
+br
+
+-project.to_dos.each do |t|
+  .todo id="todo-#{t.id}"
+    - if t.is_completed?
+      .text-decoration-line-through
+        li= t.text
+    -else
+      li= t.text
+    p= link_to "Удалить пункт", to_do_path(t), method: :delete, remote: true
+
+br
+
+p=link_to "Редактировать", '#', class: "edit-project-link", data: { project_id: project.id }
+p=link_to "Удалить Задачу", project_path(project), method: :delete
+
+.project-errors
+  =render 'shared/errors', resource: project
+
+= form_with model: project, local: false, class: 'hidden ', html: { id: "edit-project-#{project.id}" } do |f|
+  p
+    = f.label :title, 'Задача'
+    = f.text_area :title, placeholder: 'задача'
+
+  p ToDo:
+  p
+    = f.fields_for :to_dos do |todo|
+      = render 'projects/to_dos_fields', f: todo
+    .links
+      = link_to_add_association 'Добавить пункт', f, :to_dos, partial: 'projects/to_dos_fields'
+
+  p= f.submit 'Сохранить'
+
+
+
